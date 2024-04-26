@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+
+float a,b,d;
+char c;
+
+int main() {
+  
+  printf("Escolha 1 para soma, 2 para subtração, 3 para multiplicação e 4 para divisão e 'S' para sair: ");
+   scanf(" %c", &c);
+  
+    while(c !='S' & c != 's'){
+      printf("Primeiro numero:");
+      scanf("%f",&a);
+
+        printf("Segundo numero:");
+      scanf("%f",&b);
+
+if(c == '1'){
+  d = a + b;
+  printf("Resultado: %.2f\n",d);
+  
+} else if(c == '2'){
+  d = a - b;
+  printf("Resultado: %.2f\n",d);
+}else if(c == '3'){
+  d = a * b;
+  printf("Resultado: %.2f\n",d);
+}else if(c == '4'){
+  d = a / b;
+  printf("Resultado: %.2f\n",d);
+}else{
+  printf("Programa encerrado.\n");
+  printf("Valores inseridos inválidos\n");
+  return 0;
+}
+      
+       printf("Escolha 1 para soma, 2 para subtração, 3 para multiplicação e 4 para divisão e 'S' para sair: ");
+       scanf(" %c", &c);
+
+       
+
+      
+    }
+  printf("Programa encerrado.\n");
+    return 0;
+     
+}
