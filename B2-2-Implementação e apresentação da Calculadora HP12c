@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 4
+
+int *pilha;    // Aponta para região de memória livre
+int topo;   // Ponteiro para o topo da pilha
+int basePilha;  // Ponteiro para a base da pilha
+
+void empilhar(int i)
+// Armazena um elemento na Pilha
+{
+    if (topo > MAX - 1)
+    {
+        printf("Pilha Cheia\n");
+        return;
+    }
+    pilha[topo++] = i; 
+}
+
+
+int desempilhar(void)
+// Recupera um elemento da Pilha
+{
+    if (topo <= 0)
+    {
+        printf("Pilha Vazia\n");
+        return 0;
+    }
+    return pilha[--topo];
+}
+
+int main()
+{
+    int op1, op2;
+    char entrada[80];
+    pilha = (int *)malloc(MAX * sizeof(int)); /* aloca memoria para pilha */
+    if (!pilha)
+    {
+        printf("Erro de alocacao de memoria\n");
+        exit(1);
+    }
+    topo = 0; // Correção: inicia topo como 0
+    basePilha = *(pilha + MAX - 1);
+    printf("Calculadora \n");
+    do
+    {
+        printf(":");
+        fgets(entrada, sizeof(entrada), stdin); 
+        entrada[strcspn(entrada, "\n")] = '\0'; // Remove a nova linha da entrada
+        if (*entrada == '\0') // Se a entrada for vazia, encerra o programa
+            continue;
+        switch (*entrada) // Essa switch case é para a entrada de operações
+        {
+        case '+':
+            op1 = desempilhar();
+            op2 = desempilhar();
+            printf("%d\n", op2 + op1);
+            empilhar(op2 + op1);
+            break;
+        case '-':
+            op1 = desempilhar();
+            op2 = desempilhar();
+            printf("%d\n", op2 - op1);
+            empilhar(op2 - op1);
+            break;
+        case '*':
+            op1 = desempilhar();
+            op2 = desempilhar();
+            printf("%d\n", op2 * op1);
+            empilhar(op2 * op1);
+            break;
+        case '/':
+            op1 = desempilhar();
+            op2 = desempilhar();
+            if (op1 == 0) // Se você ousar fazer divisão por zero
+            {
+                printf("Divisao por 0\n");
+                break;
+            }
+            printf("%d\n", op2 / op1);
+            empilhar(op2 / op1);
+            break;
+        case '.':
+            op1 = desempilhar();
+            empilhar(op1);
+            printf("Valor corrente no topo da pilha: %d\n", op1);
+            break;
+          case 'm':
+            op1 = desempilhar();
+          printf("Valor corrente no topo da pilha: %d\n", op1);
+          break;
+        default:
+            empilhar(atoi(entrada));
+        }
+    } while (*entrada != 'q');
+    free(pilha); // Libera a memória alocada
+    return 0;
+}
