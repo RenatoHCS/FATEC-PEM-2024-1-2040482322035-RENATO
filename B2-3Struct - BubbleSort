@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct Aluno {
+    char nome[50];
+    double nota;
+} Aluno;
+
+Aluno alunos[50]; // Definição do array de alunos
+
+void cadastroAluno() {
+    static int i = 0; // Declaração como static para manter o valor de i entre chamadas
+    char nome[50];
+    double nota;
+    printf("Digite o nome do aluno: ");
+    scanf("%s", nome);
+    printf("Digite a nota do aluno: ");
+    scanf("%lf", &nota);
+    strcpy(alunos[i].nome, nome);
+    alunos[i].nota = nota;
+    i++;
+}
+
+void bubbleSort(Aluno *alunos, int tamanho) {
+    int i, j;
+    Aluno temp;
+    for (i = 0; i < tamanho - 1; i++) {
+        for (j = 0; j < tamanho - i - 1; j++) {
+            if (alunos[j].nota > alunos[j + 1].nota) {
+                temp = alunos[j];
+                alunos[j] = alunos[j + 1];
+                alunos[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void listarAlunos(Aluno *alunos, int tamanho) {
+    printf("Listagem de Alunos:\n");
+    for (int i = 0; i < tamanho; i++) {
+        if (alunos[i].nome[0] != '\0') { // Verifica se o nome não está vazio
+            printf("Nome: %s, Nota: %.2lf\n", alunos[i].nome, alunos[i].nota);
+        }
+    }
+}
+
+int main() {
+    int opcao;
+    do {
+        printf("\n1 - Incluir, 2 - Listar, 3 - Sair\n");
+        scanf("%d", &opcao);
+        switch (opcao) {
+            case 1:
+                cadastroAluno();
+                break;
+            case 2:
+                bubbleSort(alunos, 50); // Ordena os alunos pelo Bubble Sort
+                listarAlunos(alunos, 50);
+                break;
+            case 3:
+                printf("Encerrando o programa.\n");
+                break;
+            default:
+                printf("Opção inválida.\n");
+        }
+    } while (opcao != 3);
+
+    return 0;
+}
